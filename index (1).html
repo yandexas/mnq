@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MNQ trainer</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MNQ">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACd0lEQVR42u3dPUoDQQCA0fzZCXbprAI22lilyCVygIBXEDyH4BUED+A1rGy0sfUEgl0QLNTNGhJinEl2Zue9apXYLB+Tycw66Q5Hkw6s0nMLEAfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAO+DFwCxp0eHNRXb9f3ho58LaCOBAH4gBxIA6CWOdYeDk/q65PHp/cECMH4kAciANx4NNKW9U3XQNf3MierZEDcSAOiphzJP6UlJEDcYA4EAfiQByIA3EgDlqgoF3Z+iOigS8u5AlTIwfiQByIA3EgDsRBZhpb58j9yWwjB+IAcSAOxIE4EAfiQByIA3EgDhAH4kAciANxIA7EgTgQB+IAcSAOxMFaz9dH//gr37dSegHiUIA42uLh4375V3tsQhxJFhDs9OpNHAowcuQ+DwgoY9yf1n9s5JgJcfzVfPa6qGEWZwawVEBqxLG2gFgSL0AcOy9g5Txgq9OLxNHkPGDeCW3i4O7466KQ463zjuP7s0DUNYCqAAbZFBCVAnKKYw/rAVt9awL7juPXPCBSDeP+1FGT2cSxi52hfD8NlhiHAsQRXzUPyH0NQBxxZoIUF4cCWq+nDCLHgbcVgmxcgKnPyhNcrTFyIA7EgTgQB+JAHIgDcSAOxAHiQBxE0NiubO47lkYOxAHiQByIA3EgDsSBOGiBgv5vZeNBXvXTXQo59cvIgTgQB+YcRUh8t9nIgTgQB+JAHIgDcZCZdNc5PHFu5EAciANxIA7EAeJAHIiDXesORxN3ASMH4kAciANxIA7EgTgQB+IAcSAOxIE4EAfiQByIA3EgDhAH4kAciANxIA7EgTholU8F+G5F7pFCPQAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACd0lEQVR42u3dPUoDQQCA0fzZCXbprAI22lilyCVygIBXEDyH4BUED+A1rGy0sfUEgl0QLNTNGhJinEl2Zue9apXYLB+Tycw66Q5Hkw6s0nMLEAfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAO+DFwCxp0eHNRXb9f3ho58LaCOBAH4gBxIA6CWOdYeDk/q65PHp/cECMH4kAciANx4NNKW9U3XQNf3MierZEDcSAOiphzJP6UlJEDcYA4EAfiQByIA3EgDlqgoF3Z+iOigS8u5AlTIwfiQByIA3EgDsRBZhpb58j9yWwjB+IAcSAOxIE4EAfiQByIA3EgDhAH4kAciANxIA7EgTgQB+IAcSAOxMFaz9dH//gr37dSegHiUIA42uLh4375V3tsQhxJFhDs9OpNHAowcuQ+DwgoY9yf1n9s5JgJcfzVfPa6qGEWZwawVEBqxLG2gFgSL0AcOy9g5Txgq9OLxNHkPGDeCW3i4O7466KQ463zjuP7s0DUNYCqAAbZFBCVAnKKYw/rAVt9awL7juPXPCBSDeP+1FGT2cSxi52hfD8NlhiHAsQRXzUPyH0NQBxxZoIUF4cCWq+nDCLHgbcVgmxcgKnPyhNcrTFyIA7EgTgQB+JAHIgDcSAOxAHiQBxE0NiubO47lkYOxAHiQByIA3EgDsSBOGiBgv5vZeNBXvXTXQo59cvIgTgQB+YcRUh8t9nIgTgQB+JAHIgDcZCZdNc5PHFu5EAciANxIA7EAeJAHIiDXesORxN3ASMH4kAciANxIA7EgTgQB+IAcSAOxIE4EAfiQByIA3EgDhAH4kAciANxIA7EgTholU8F+G5F7pFCPQAAAABJRU5ErkJggg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDF0F5; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6880; --line:#D5DBE5;
+  --up:#089981; --down:#E5364A; --vwap:#C98A1E; --up-soft:#E0F3EF; --down-soft:#FCE5E8;
+  --focus:#2F6FEB;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0F1726; --surface:#18223A; --ink:#E6EBF4; --muted:#93A0B8; --line:#2A3654;
+    --up:#22B39A; --down:#F05467; --vwap:#EBB04A; --up-soft:#133B39; --down-soft:#3B1D28;
+    --focus:#7FA6FF;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:"Barlow",system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+.app{max-width:480px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 18px 120px}
+.num{font-family:"Barlow Condensed","Barlow",sans-serif;font-weight:700;letter-spacing:.01em}
+h1{font-family:"Barlow Condensed","Barlow",sans-serif;font-weight:700;font-size:40px;line-height:1.05}
+h2{font-size:20px;font-weight:600;line-height:1.3}
+.sub{color:var(--muted);margin-top:6px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 14px 8px;margin:22px 0 18px}
+.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:4px;padding:0 4px}
+.chart svg{width:100%;height:auto;display:block}
+.candle{cursor:pointer}
+.candle:focus-visible{outline:none}
+.candle:focus-visible .wick{stroke:var(--focus);stroke-width:3}
+
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:12px;font-weight:600;font-size:18px;padding:12px 18px}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-ghost{border:1.5px solid var(--line);margin-top:10px;background:var(--surface)}
+.btn-row{display:flex;gap:10px;margin-top:14px}
+.btn-row .btn{margin-top:0}
+.foot-note{margin-top:20px;color:var(--muted);font-size:15px}
+.notice{margin-top:14px;padding:12px 14px;border-radius:10px;border-left:4px solid var(--vwap);background:var(--surface);font-size:15px}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:4px;z-index:5}
+nav.tabs button{flex:1;max-width:150px;min-height:48px;border-radius:10px;font-weight:600;font-size:15px;color:var(--muted)}
+nav.tabs button[aria-current="page"]{color:var(--ink);background:var(--paper)}
+
+.topic-list{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.topic{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.topic-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.topic-name{font-weight:600;font-size:18px}
+.topic-desc{color:var(--muted);font-size:15px;margin-top:2px}
+.meter{height:6px;background:var(--line);border-radius:3px;margin-top:10px;overflow:hidden}
+.meter span{display:block;height:100%;border-radius:3px}
+
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--muted);font-weight:600;margin:-6px 0 6px -4px;padding:0 4px}
+.diag{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:18px 0 6px}
+.diag svg{width:100%;height:auto;display:block}
+.points{list-style:none;margin:18px 0 22px}
+.points li{position:relative;padding:12px 0 12px 22px;border-bottom:1px solid var(--line)}
+.points li:last-child{border-bottom:0}
+.points li::before{content:"";position:absolute;left:4px;top:19px;width:6px;height:12px;border-radius:1px;background:var(--up)}
+.points li.warn::before{background:var(--down)}
+.points b{font-weight:600}
+
+.train-top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.close{width:44px;height:44px;border-radius:10px;font-size:26px;line-height:1;color:var(--muted);flex:none}
+.bar{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar span{display:block;height:100%;background:var(--ink);transition:width .25s}
+.count{font-size:15px;color:var(--muted);min-width:44px;text-align:right}
+.tag{display:inline-block;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:8px}
+.q{font-size:22px;font-weight:600;line-height:1.35;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;min-height:56px;font-size:17px;line-height:1.35}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--up);background:var(--up-soft)}
+.opt.wrong{border-color:var(--down);background:var(--down-soft)}
+.opt.dim{opacity:.55}
+.feedback{margin-top:18px;border-radius:12px;padding:16px;border-left:4px solid var(--up);background:var(--surface)}
+.feedback.bad{border-left-color:var(--down)}
+.feedback.meh{border-left-color:var(--vwap)}
+.feedback h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.conf-q{margin-top:14px;font-weight:600}
+
+/* worked steps */
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px}
+.step.ok{border-color:var(--up)}
+.step.bad{border-color:var(--down)}
+.step-n{font-size:14px;font-weight:600;color:var(--muted)}
+.step-ask{font-weight:600;font-size:18px;line-height:1.35;margin-top:2px}
+.step-you{margin-top:8px;font-weight:600}
+.step.ok .step-you{color:var(--up)}
+.step.bad .step-you{color:var(--down)}
+.step-show{margin-top:6px}
+.answer-row{display:flex;gap:10px;margin-top:12px;align-items:stretch}
+.field{flex:1;display:flex;align-items:center;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);padding:0 12px;min-height:56px}
+.field:focus-within{border-color:var(--focus)}
+.field span{color:var(--muted);font-size:20px;margin-right:4px}
+.field input{flex:1;min-width:0;border:0;background:transparent;font-size:22px;font-weight:600;outline:none;padding:8px 0}
+.check{width:auto;min-width:96px;margin:0}
+.choice-row{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.err{color:var(--down);font-size:15px;margin-top:6px}
+.final{margin-top:4px;background:var(--surface);border-radius:12px;padding:16px;border-left:4px solid var(--up)}
+.final.bad{border-left-color:var(--down)}
+.final .big{font-size:40px;line-height:1.1}
+@media (prefers-reduced-motion: no-preference){
+  .step.fresh,.feedback,.final{animation:rise .22s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+
+.score{font-size:72px;line-height:1;margin:24px 0 6px}
+.missed{margin:20px 0}
+.missed li{margin-left:20px;padding:4px 0}
+.rows{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 16px}
+.row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .meter{grid-column:1 / -1;margin-top:2px}
+.section-title{margin-top:28px}
+.spark{display:flex;align-items:flex-end;gap:5px;height:80px;margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.spark span{flex:1;min-width:6px;border-radius:2px 2px 0 0}
+.danger{color:var(--down);border-color:var(--down)}
+.empty{margin-top:12px;color:var(--muted)}
+.backup textarea{width:100%;margin-top:10px;min-height:84px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:14px/1.4 ui-monospace,Menlo,monospace;padding:10px;resize:vertical;word-break:break-all}
+.backup .status{margin-top:8px;font-size:15px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<nav class="tabs" id="tabs" aria-label="Sections">
+  <button data-action="tab" data-tab="home">Today</button>
+  <button data-action="tab" data-tab="learn">Learn</button>
+  <button data-action="tab" data-tab="progress">Progress</button>
+</nav>
+
+<script>
+/* ---------- helpers ---------- */
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+const money=n=>'$'+(Number.isInteger(n)?n.toLocaleString('en-US'):n.toFixed(2));
+const px=n=>n.toLocaleString('en-US');
+const fR=r=>(r>0?'+':r<0?'−':'')+Math.abs(r)+'R';
+const DAY=864e5;
+const INTERVALS=[0,0,1,3,7,16,35];
+const BASE=()=>30200+rnd(0,116)*5;            // prices stay 30,0xx–30,9xx so the last-3-digits trick always works
+const last3=n=>String(n).slice(-3);
+const diffText=(a,b)=>{const hi=Math.max(a,b),lo=Math.min(a,b);return `${px(hi)} − ${px(lo)} = <b>${hi-lo}</b>. Only the last 3 digits change, so it's just ${last3(hi)} − ${last3(lo)}.`;};
+const plural=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
+
+/* ---------- topics ---------- */
+const TOPICS=[
+  {id:'math',name:'Money math',short:'Math',desc:'Double the points, times the contracts'},
+  {id:'orb',name:'Opening range breakout',short:'ORB',desc:'The box, the break, the stop'},
+  {id:'vwap',name:'VWAP mean reversion',short:'VWAP',desc:'Fair price and fading the stretch'},
+  {id:'risk',name:'Risk and sizing',short:'Risk',desc:'Stops, contracts, loss limits'},
+  {id:'journal',name:'R and the journal',short:'R',desc:'The ladder, expectancy, honest logging'},
+  {id:'session',name:'The open',short:'Open',desc:'When the session starts on your clock'}
+];
+const topicById=id=>TOPICS.find(t=>t.id===id);
+
+/* ---------- worked-step questions (you type the answer to every step) ---------- */
+function countText(risk,move){
+  const k=move/risk;
+  if(k<1) return `${move} is less than one full step of ${risk}. It's exactly half of it, so <b>0.5</b>.`;
+  const f=Math.floor(k), list=[];for(let i=1;i<=f;i++) list.push(`${i*risk} (${i})`);
+  if(Number.isInteger(k)) return `Count up in ${risk}s: ${list.join(', ')}. You land on ${move} at step <b>${k}</b>.`;
+  return `Count up in ${risk}s: ${list.join(', ')}. ${move} sits halfway between ${f*risk} and ${(f+1)*risk}, so <b>${k}</b>.`;
+}
+function rSteps(side){
+  return ()=>{
+    const R=pick([2,1.5,3,1,-1,0.5,2.5,2,1]);
+    const risk=Number.isInteger(R)?pick([10,12,15,20,25,30,40]):pick([10,12,20,30,40]);
+    const e=BASE(), dir=side==='long'?1:-1, stop=e-dir*risk, exit=e+dir*R*risk, move=Math.abs(R*risk), good=R>0;
+    const wants=side==='long'?'up':'down', went=exit>e?'up':'down';
+    return {
+      q:`${side==='long'?'Long':'Short'} trade. Entry ${px(e)}, stop ${px(stop)}, exit ${px(exit)}. What's the R?`,
+      steps:[
+        {ask:'How far is the stop from entry?',unit:'pts',type:'num',answer:risk,
+         show:`${diffText(stop,e)} That distance is your ruler: <b>1R = ${risk} points</b>.`},
+        {ask:'Did price go the way you bet?',type:'choice',choices:['Yes, my way (+)','No, against me (−)'],answer:good?0:1,
+         show:`A ${side} bets price goes <b>${wants}</b>. Exit ${px(exit)} is ${went==='up'?'above':'below'} entry, so price went ${went}. ${good?'Your way, so the answer is <b>plus</b>.':'Against you, so the answer is <b>minus</b>.'}`},
+        {ask:'How far did price move, entry to exit?',unit:'pts',type:'num',answer:move,show:diffText(e,exit)},
+        {ask:`How many ${risk}-point steps fit in ${move}?`,unit:'R',type:'num',answer:Math.abs(R),abs:true,show:countText(risk,move)}
+      ],
+      final:fR(R), good,
+      finalNote:`Sign from step 2, count from step 4: <b>${fR(R)}</b>. Here it is on the ladder:`,
+      ladder:{e,risk,dir,R,exit}
+    };
+  };
+}
+const GEN={
+  pnl:()=>{
+    const side=pick(['long','short']),dir=side==='long'?1:-1,p=rnd(6,60),c=rnd(1,3),win=Math.random()<0.7,e=BASE(),exit=e+dir*(win?1:-1)*p,usd=p*2*c;
+    const wants=side==='long'?'up':'down',went=exit>e?'up':'down';
+    return {q:`${side==='long'?'Long':'Short'} trade, ${plural(c,'contract')}. Entry ${px(e)}, exit ${px(exit)}. What's the P&L?`,
+      steps:[
+        {ask:'How many points from entry to exit?',unit:'pts',type:'num',answer:p,show:diffText(e,exit)},
+        {ask:'Double it. That\'s the money for 1 contract.',unit:'$',type:'num',answer:p*2,show:`${p} × 2 = <b>$${p*2}</b>. MNQ pays $2 a point.`},
+        {ask:`Times the contracts (${c}).`,unit:'$',type:'num',answer:usd,show:c===1?`1 contract, so it stays <b>${money(usd)}</b>.`:`$${p*2} × ${c} = <b>${money(usd)}</b>. ${c} contracts = the same trade ${c} times.`},
+        {ask:'Win or loss?',type:'choice',choices:['Win (+)','Loss (−)'],answer:win?0:1,show:`A ${side} wants price ${wants}. It went ${went}, so it's a <b>${win?'win':'loss'}</b>.`}
+      ],
+      final:(win?'+':'−')+money(usd),good:win,finalNote:'Double the points, times the contracts, then the sign.'};
+  },
+  ticks:()=>{
+    const t=rnd(2,15)*4;
+    return {q:`MNQ moves ${t} ticks against you on 1 contract. How much did you lose?`,
+      steps:[
+        {ask:'Turn ticks into points. Divide by 4.',unit:'pts',type:'num',answer:t/4,show:`4 ticks make 1 point, so ${t} ÷ 4 = <b>${t/4} points</b>.`},
+        {ask:'Double it.',unit:'$',type:'num',answer:t/2,show:`${t/4} × 2 = <b>$${t/2}</b>.`}
+      ],
+      final:'−'+money(t/2),good:false,finalNote:'Shortcut for 1 MNQ contract: ticks ÷ 2 = dollars.'};
+  },
+  riskUsd:()=>{
+    const e=BASE(),d=pick([15,20,25,30,35,40,50]),c=rnd(1,3),usd=d*2*c;
+    return {q:`ORB long, ${plural(c,'contract')}. Entry ${px(e)}, stop at the range low ${px(e-d)}. How many dollars are you risking?`,
+      steps:[
+        {ask:'How far is the stop from entry?',unit:'pts',type:'num',answer:d,show:diffText(e,e-d)},
+        {ask:'Double it.',unit:'$',type:'num',answer:d*2,show:`${d} × 2 = <b>$${d*2}</b> per contract.`},
+        {ask:`Times the contracts (${c}).`,unit:'$',type:'num',answer:usd,show:c===1?`1 contract, so <b>${money(usd)}</b>.`:`$${d*2} × ${c} = <b>${money(usd)}</b>.`}
+      ],
+      final:money(usd),good:true,finalNote:'That\'s your 1R in dollars for this trade. Know it before you click.'};
+  },
+  size:()=>{
+    const max=pick([50,60,80,90,100,120,150]),d=pick([15,20,25,30,40,50,60]),per=d*2,n=Math.floor(max/per);
+    let stack=[];for(let i=1;i<=n+1;i++) stack.push(`$${i*per} ${i<=n?'✓':'✗'}`);
+    return {q:`Your max risk is ${money(max)} a trade. Today's ORB stop is ${d} points away. How many MNQ contracts?`,
+      steps:[
+        {ask:'What does 1 contract risk? Double the stop points.',unit:'$',type:'num',answer:per,show:`${d} × 2 = <b>$${per}</b> per contract.`},
+        {ask:`How many whole contracts fit in ${money(max)}? Type 0 if none fit.`,unit:'',type:'num',answer:n,
+         show:n===0?`Even 1 contract ($${per}) is over ${money(max)}. So <b>0</b>: skip the day.`:`Stack them up: ${stack.join(', ')}. So <b>${n}</b>. Whole contracts only, never round up.`}
+      ],
+      final:n===0?'0 · skip it':plural(n,'contract'),good:n>0,finalNote:'Size is the dial. The stop stays where the chart puts it.'};
+  },
+  longR:rSteps('long'),
+  shortR:rSteps('short')
+};
+
+/* ---------- card bank ---------- */
+const S=(id,topic,q,opts,why)=>({id,topic,q,opts,answer:opts[0],why});
+const G=(id,topic,gen)=>({id,topic,gen});
+const CARDS=[
+  G('g_pnl','math',GEN.pnl), G('g_ticks','math',GEN.ticks),
+  S('m_tick','math','How many ticks make 1 MNQ point?',['4','2','10','1'],'A tick is 0.25 points, so 4 ticks make a point. 1 tick = $0.50, 1 point = $2.'),
+  S('m_nq','math','MNQ vs NQ — what\'s the difference?',['NQ is 10× bigger: $20 a point vs $2','Same contract, different name','MNQ is the bigger one','NQ is $5 a point, MNQ is $2'],'MNQ is the micro: $2 a point. NQ is full size: $20 a point. On MNQ every mistake costs a tenth.'),
+  S('m_line','math','The MNQ money rule in one line?',['Double the points, times the contracts','Double the ticks, times the contracts','Points times 5, times the contracts','Points times the contracts'],'Points × $2 × contracts. "Double the points, times the contracts."'),
+  S('m_contracts','math','What does "2 contracts" mean?',['You\'re in the same trade twice, so wins and losses are doubled','Your stop is twice as far','You need 2 setups to enter','Your target is 2R'],'Contracts is the number you type in the order box. Each one wins or loses the same amount, so 2 = double the money either way.'),
+
+  S('o_candles','orb','On a 5-minute chart, how many candles make the 15-minute opening range?',['3','5','15','1'],'15 minutes ÷ 5 = 3 candles. Box those three, then stop drawing.'),
+  S('o_edges','orb','Where do the box edges go?',['Exactly on the highest wick and lowest wick of those 3 candles','A bit above and below, for breathing room','On the bodies of the first candle only','Wherever looks like support and resistance'],'The box edges ARE your levels. If they float, you\'re trading prices nobody hit.'),
+  S('o_long','orb','A candle closes above the range high. Signal?',['Long, stop below the range low','Short — the high is resistance','Long, stop 10 points under entry','Nothing until it comes back into the box'],'ORB trades with the break. Close above = long. Stop on the far side of the box: the range low.'),
+  S('o_short','orb','A candle closes below the range low. Signal?',['Short, stop above the range high','Long — the low is support','Short, stop just under the range low','Wait for a retest first'],'Mirror of the long. Close below = short. Stop on the far side: above the range high.'),
+  S('o_wick','orb','A wick pokes above the range high, but the candle closes back inside the box. Go long?',['No — no close outside, no signal','Yes, the high broke','Yes, with half size','Go short instead'],'Wicks get faked all day. The signal is a candle that closes outside the box.'),
+  S('o_whystop','orb','Why does the ORB stop sit on the far side of the box?',['If price goes back through the whole box, the breakout failed','It makes the stop as small as possible','VWAP is usually there','So risk is always 10 points'],'A stop marks where your idea is proven wrong. Going all the way back through the box is that proof.'),
+  S('o_tall','orb','Huge opening range today — the stop would be 70 points away. What now?',['Fewer contracts, or skip the day','Move the stop closer','Take it and accept the bigger loss','Use a fixed 20-point stop'],'The chart sets the stop. Size is the only dial. If 1 contract is still too much, today isn\'t your day.'),
+  S('o_with','orb','ORB trades ___ the breakout.',['with','against','after fading','half of'],'Breakout, not fade. You\'re betting the move out of the box keeps going.'),
+
+  S('v_def','vwap','What is VWAP?',['Average traded price, weighted by volume','Midpoint of the day\'s high and low','Average of the last 20 closes','The price with the most open contracts'],'Volume Weighted Average Price. Prices where lots of contracts traded pull it harder.'),
+  S('v_ma','vwap','VWAP vs a 20-period moving average — the key difference?',['VWAP weights by volume; the MA treats every bar equally','VWAP is just smoother','VWAP only uses closes','No real difference'],'A 10-contract bar and a 10,000-contract bar count the same in an MA. Not in VWAP.'),
+  S('v_reset','vwap','When does VWAP start fresh?',['Every new session','Every week','Never','Every hour'],'Session VWAP resets at the start of each session. It describes today only.'),
+  S('v_above','vwap','Price ran far above VWAP and is stalling. Mean-reversion play?',['Short, targeting VWAP','Long — momentum continues','Wait for it to reach VWAP, then short','Long once it closes below VWAP'],'Mean reversion bets the stretch snaps back. Far above + stalling = short back toward VWAP.'),
+  S('v_below','vwap','Price dumped far below VWAP and is stalling. Mean-reversion play?',['Long, targeting VWAP','Short — it\'s weak','Short once it reaches VWAP','Never trade below VWAP'],'Mirror of the short. Far below + stalling = long back toward VWAP.'),
+  S('v_target','vwap','In a VWAP mean-reversion trade, what\'s the natural target?',['VWAP itself','The opening range high','Always 2R','The day\'s high'],'You\'re betting on a return to fair price. Fair price is VWAP.'),
+  S('v_stall','vwap','Why wait for the stall before fading a move away from VWAP?',['A strong push can keep going — fading it early is standing in front of a train','Stalls always happen at 2R','VWAP only updates during stalls','You don\'t need to wait'],'Stretched isn\'t enough. You want proof the push is running out of fuel.'),
+  S('v_orb','vwap','ORB vs VWAP mean reversion — how do they relate?',['Opposite logic: ORB goes with the move, VWAP reversion fades it','Same strategy, different names','Both fade the move','Both only trade above VWAP'],'Know which one you\'re in before you click.'),
+
+  G('g_riskUsd','risk',GEN.riskUsd), G('g_size','risk',GEN.size),
+  S('r_dial','risk','Your stop feels too expensive. Which dial do you turn?',['Size — fewer contracts','The stop — move it closer','Both','Neither, just take it'],'Two dials: stop and size. The chart sets the stop. You only ever touch size.'),
+  S('r_round','risk','The math says 1.8 contracts fit your max risk. How many do you trade?',['1','2','1.8','Doesn\'t matter'],'Whole contracts only, and always round down. Rounding up means risking more than your max.'),
+  S('r_widen','risk','Trade going against you, nearing your stop. Move the stop further away?',['Never','Yes, give it room','Once per trade is fine','Yes if VWAP is close'],'Moving a stop away turns a planned small loss into an unplanned big one.'),
+  S('r_daily','risk','You hit your daily loss limit. Now what?',['Done for the day','One more to win it back','Double size to recover faster','Switch strategies'],'The limit exists for exactly the moment you want to break it.'),
+  S('r_pct','risk','Rough max risk per trade while learning?',['1% of the account or less','5%','10%','Whatever feels right'],'Small enough that ten losses in a row hurt but don\'t end you.'),
+
+  G('g_longR','journal',GEN.longR), G('g_shortR','journal',GEN.shortR),
+  S('j_R','journal','What does +2R mean?',['You made twice what you risked','You made $2','You won 2 trades','You risked 2%'],'Your stop distance is 1R. +2R = you got out two stop-distances in your favour.'),
+  S('j_stop','journal','Price hits your stop exactly. What\'s the R?',['−1R','0R','+1R','−2R'],'The stop is the first rung below entry on the ladder. Hitting it is always −1R.'),
+  S('j_sanity','journal','You work out a trade and get +45R. What probably happened?',['You used the points and forgot to count steps','Amazing trade','You used too many contracts','It was a short'],'R is almost always between −1 and +5. A huge number means you skipped the "how many steps fit" part.'),
+  S('j_N','journal','You break your rules and the trade wins. How do you log it?',['Followed rules: N','Followed rules: Y, it worked','Don\'t log it','Log it but leave it out of stats'],'A rule-break that wins pays you for bad habits. Log N.'),
+  S('j_Y','journal','You follow your plan exactly and stop out for −1R. How do you log it?',['Followed rules: Y','Followed rules: N, it lost','Leave it blank','N, and change the rules'],'The column tracks your behaviour, not the result.'),
+  S('j_70','journal','Win rate 70%, average R per trade −0.2R. What\'s happening?',['Losing money — losers are much bigger than winners','Profitable, 70% can\'t lose','Breaking even','Impossible numbers'],'Cutting winners early, letting losers run. Win rate feels good and pays nothing.'),
+  S('j_40','journal','Win rate 40%, average R per trade +0.3R. What\'s happening?',['Profitable — winners are bigger than losers','Losing, under 50% can\'t work','Too few trades to say','Need 50%+ first'],'Average R is what pays. At 2R targets you can lose most trades and still win.'),
+  S('j_sample','journal','How many journaled trades before you judge a strategy?',['30 or more','5','10','1 good week'],'Small samples lie. 30+ trades before you call it working or broken.'),
+
+  S('s_ny','session','Nasdaq futures day session opens at 9:30 in which time zone?',['New York','Chicago','London','UTC'],'9:30 New York time. That first candle starts your opening range.'),
+  S('s_lt','session','On Lithuanian time, when does the opening range usually start?',['16:30','15:30','9:30','13:30'],'9:30 New York = 16:30 in Lithuania most of the year. For a week or two in March and around early November it\'s 15:30.'),
+  S('s_utc','session','Chart set to UTC in July. Which candle starts the opening range?',['13:30','9:30','14:30','16:30'],'US summer time: 9:30 New York = 13:30 UTC. In US winter it\'s 14:30 UTC.'),
+  S('s_wrong','session','On a UTC chart in mid-October you boxed 13:50–14:00. What\'s wrong?',['The open was 13:30 — that\'s the third 15-minute block','Nothing, that\'s right','It should be 4 candles','It should start at 14:00'],'US is still on summer time in mid-October, so the open is 13:30 UTC.'),
+  S('s_first','session','Which candle is the first one in your box?',['The first candle at the session open','The biggest candle of the morning','Whatever\'s first on screen','The first after VWAP crosses'],'Opening range means the opening. Any other 15 minutes is just three candles.')
+];
+
+/* ---------- the R ladder ---------- */
+function ladderSVG(L){
+  const kTop=Math.max(1,Math.ceil(Math.max(L.R,0))), ks=[];for(let k=-1;k<=kTop;k++) ks.push(k);
+  const price=k=>L.e+L.dir*k*L.risk, prices=ks.map(price), hi=Math.max(...prices);
+  const gap=42, top=18, y=p=>top+(hi-p)/L.risk*gap, h=top*2+(ks.length-1)*gap;
+  const exitOnRung=Number.isInteger(L.R), good=L.R>0, ec=good?'var(--up)':'var(--down)';
+  let g='';
+  ks.forEach(k=>{
+    const p=price(k),yy=y(p);
+    const col=k===-1?'var(--down)':k===0?'var(--ink)':'var(--line)', w=k===0?2.5:1.5;
+    g+=`<line x1="112" y1="${yy}" x2="214" y2="${yy}" stroke="${col}" stroke-width="${w}"/>`;
+    g+=`<text x="104" y="${yy+4}" text-anchor="end" font-size="12" fill="var(--muted)">${px(p)}</text>`;
+    const isExit=exitOnRung&&k===L.R;
+    const lab=isExit?`exit ${fR(L.R)}`:k===-1?'stop −1R':k===0?'entry':fR(k);
+    const lc=isExit?ec:k===-1?'var(--down)':'var(--ink)';
+    g+=`<text x="224" y="${yy+4}" font-size="13" font-weight="${isExit||k===0?700:500}" fill="${lc}">${lab}</text>`;
+  });
+  const ye=y(L.exit);
+  g+=`<line x1="112" y1="${ye}" x2="214" y2="${ye}" stroke="${ec}" stroke-width="3.5"/><circle cx="163" cy="${ye}" r="6" fill="${ec}"/>`;
+  if(!exitOnRung) g+=`<text x="224" y="${ye+4}" font-size="13" font-weight="700" fill="${ec}">exit ${fR(L.R)}</text>`;
+  g+=`<text x="4" y="${y(price(0))+4}" font-size="12" fill="var(--muted)">${L.dir>0?'↑ long':'↓ short'}</text>`;
+  return `<svg viewBox="0 0 320 ${h}" role="img" aria-label="R ladder: entry ${px(L.e)}, steps of ${L.risk} points, exit at ${fR(L.R)}">${g}</svg>`;
+}
+
+/* ---------- lessons ---------- */
+const ORB_SVG=`<svg viewBox="0 0 300 140" role="img" aria-label="Three candles boxed, then a candle closes above the box: long, stop at range low">
+<rect x="22" y="40" width="70" height="66" fill="none" stroke="currentColor" stroke-opacity=".45"/>
+<line x1="92" y1="40" x2="292" y2="40" stroke="currentColor" stroke-opacity=".45" stroke-dasharray="4 4"/>
+<line x1="92" y1="106" x2="292" y2="106" stroke="var(--down)" stroke-dasharray="4 4"/>
+<line x1="35" y1="52" x2="35" y2="98" stroke="var(--up)"/><rect x="30" y="60" width="10" height="30" fill="var(--up)"/>
+<line x1="57" y1="44" x2="57" y2="106" stroke="var(--down)"/><rect x="52" y="56" width="10" height="38" fill="var(--down)"/>
+<line x1="79" y1="40" x2="79" y2="92" stroke="var(--up)"/><rect x="74" y="50" width="10" height="34" fill="var(--up)"/>
+<line x1="116" y1="46" x2="116" y2="88" stroke="var(--up)"/><rect x="111" y="54" width="10" height="26" fill="var(--up)"/>
+<line x1="138" y1="28" x2="138" y2="74" stroke="var(--up)"/><rect x="133" y="32" width="10" height="30" fill="var(--up)"/>
+<line x1="160" y1="16" x2="160" y2="52" stroke="var(--up)"/><rect x="155" y="20" width="10" height="24" fill="var(--up)"/>
+<text x="292" y="32" text-anchor="end" font-size="11" fill="currentColor">close above = long</text>
+<text x="292" y="122" text-anchor="end" font-size="11" fill="var(--down)">stop: range low</text>
+<text x="57" y="124" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".7">first 15 min</text></svg>`;
+const VWAP_SVG=`<svg viewBox="0 0 300 140" role="img" aria-label="Price stretches far above VWAP, stalls, then returns to VWAP">
+<line x1="10" y1="92" x2="290" y2="78" stroke="var(--vwap)" stroke-width="2"/>
+<polyline fill="none" stroke="currentColor" stroke-width="1.6" points="10,98 34,84 58,94 84,76 110,56 134,38 152,30 166,28 180,31 196,42 218,64 244,80 268,82 290,77"/>
+<line x1="150" y1="22" x2="184" y2="22" stroke="var(--down)" stroke-width="1.5"/>
+<text x="167" y="14" text-anchor="middle" font-size="11" fill="var(--down)">stretched + stalling: short</text>
+<text x="244" y="102" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".7">target: VWAP</text>
+<text x="12" y="116" font-size="11" fill="var(--vwap)">VWAP</text></svg>`;
+const LESSONS={
+  math:{pts:[
+    ['One rule: <b>double the points, then times the contracts.</b> MNQ pays $2 a point per contract.'],
+    ['<b>Points</b> = distance between two prices. Only the last 3 digits change: 30,735 − 30,700 is just 735 − 700 = <b>35</b>.'],
+    ['<b>Double it</b>: 35 × 2 = $70. That\'s for 1 contract.'],
+    ['<b>Times the contracts</b>: the number you type in the order box. 2 contracts = the same trade twice = $140. Losses double the same way.'],
+    ['<b>Ticks</b>: divide by 4 to get points. Shortcut on 1 contract: ticks ÷ 2 = dollars.'],
+    ['NQ, the big one, is $20 a point. Stay on MNQ while learning.','warn']
+  ]},
+  orb:{svg:ORB_SVG,pts:[
+    ['Opening range = high and low of the <b>first 15 minutes</b> after the 9:30 New York open. On a 5-min chart: <b>3 candles</b>.'],
+    ['Box edges sit <b>exactly</b> on the highest wick and lowest wick of those 3 candles.'],
+    ['Candle <b>closes above</b> the range high → <b>long</b>. Stop below the range low.'],
+    ['Candle <b>closes below</b> the range low → <b>short</b>. Stop above the range high.'],
+    ['A wick poking out doesn\'t count. Wait for the close.','warn'],
+    ['Stop on the far side: price going back through the whole box = the breakout failed.'],
+    ['Tall box = far stop = big risk. Size down or skip the day.','warn']
+  ]},
+  vwap:{svg:VWAP_SVG,pts:[
+    ['VWAP = <b>volume-weighted average price</b> for today\'s session. Resets each session.'],
+    ['A huge-volume bar pulls VWAP much harder than a quiet one. A moving average treats them the same.'],
+    ['Mean reversion: price stretched far from VWAP tends to come back.'],
+    ['Far <b>above</b> and stalling → <b>short</b>, target VWAP. Far <b>below</b> and stalling → <b>long</b>, target VWAP.'],
+    ['Wait for the stall. Fading a strong push early is standing in front of a train.','warn'],
+    ['This <b>fades</b> the move. ORB goes <b>with</b> it. Know which one you\'re trading.','warn']
+  ]},
+  risk:{pts:[
+    ['Two dials: <b>stop</b> and <b>size</b>. The chart sets the stop. You only move size.'],
+    ['1 contract risks <b>the stop points, doubled</b>. 25 points away = $50.'],
+    ['Stack that up to your max: max $90 → $50 ✓, $100 ✗ → <b>1 contract</b>.'],
+    ['Whole contracts only, <b>always round down</b>. 1.8 means 1. If not even 1 fits, skip.','warn'],
+    ['Hit your daily loss limit → done for the day.','warn'],
+    ['Never move a stop further away.','warn']
+  ]},
+  journal:{ladder:{e:30600,risk:25,dir:1,R:2,exit:30650},pts:[
+    ['Your <b>stop distance is your ruler</b>. Entry 30,600, stop 30,575 → 25 points = <b>1R</b>.'],
+    ['Build a <b>ladder</b> from entry in steps of 25, going the way you bet: up for a long, down for a short.'],
+    ['Find the exit on the ladder. 30,650 sits on the second rung = <b>+2R</b>. Between two rungs = halfway, like +1.5R.'],
+    ['Sign: <b>did price go the way you bet?</b> Yes = plus, no = minus. Hitting the stop = −1R.'],
+    ['Sanity check: R is almost always between −1 and +5. Got +45R? You skipped counting the steps.','warn'],
+    ['<b>Average R per trade</b> over 30+ trades is your edge. Win rate alone means nothing.'],
+    ['"Followed rules?" tracks behaviour, not results. Rule-break that wins = N.','warn']
+  ]},
+  session:{pts:[
+    ['Nasdaq futures day session opens <b>9:30 New York time</b>.'],
+    ['In Lithuania that\'s usually <b>16:30</b>. For a week or two in March and around early November it\'s 15:30.'],
+    ['On UTC: <b>13:30</b> during US summer time, <b>14:30</b> in US winter.'],
+    ['Check your TradingView timezone (bottom right of the chart). The first candle in your box is the first candle at the open.','warn']
+  ]}
+};
+
+/* ---------- storage: Claude storage, else this phone's storage, else memory + backup code ---------- */
+const STORE_KEY='mnq-trainer-v1';
+let state={cards:{},sessions:[]};
+let view={tab:'home',screen:'home',topic:null,train:null,confirmReset:false,restoreMsg:''};
+let storeMode='memory', saveTimer;
+async function detectStore(){
+  if(window.storage){ try{ const r=await window.storage.set('probe','1',false); if(r){storeMode='claude';return;} }catch(e){} }
+  try{ localStorage.setItem('mnq_probe','1'); localStorage.removeItem('mnq_probe'); storeMode='local'; return; }catch(e){}
+  storeMode='memory';
+}
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    const v=JSON.stringify(state);
+    try{ if(storeMode==='claude') await window.storage.set(STORE_KEY,v,false); else if(storeMode==='local') localStorage.setItem(STORE_KEY,v); }
+    catch(e){ storeMode='memory'; }
+  },250);
+}
+function applyLoaded(raw){
+  const s=JSON.parse(raw);
+  if(!s||typeof s.cards!=='object') throw new Error('bad data');
+  state={cards:s.cards||{},sessions:Array.isArray(s.sessions)?s.sessions:[]};
+}
+async function load(){
+  await detectStore();
+  try{
+    if(storeMode==='claude'){ const r=await window.storage.get(STORE_KEY,false); if(r&&r.value) applyLoaded(r.value); }
+    else if(storeMode==='local'){ const v=localStorage.getItem(STORE_KEY); if(v) applyLoaded(v); }
+  }catch(e){}
+  render();
+}
+const backupCode=()=>btoa(JSON.stringify(state));
+
+const getC=id=>state.cards[id]||{box:0,due:0,right:0,wrong:0,hist:[]};
+function grade(id,ok){
+  const c=Object.assign({},getC(id)); c.hist=(c.hist||[]).slice();
+  if(ok){c.right++;c.box=Math.min(6,c.box+1);}else{c.wrong++;c.box=1;}
+  c.due=Date.now()+INTERVALS[c.box]*DAY;
+  c.hist.push(ok?1:0); if(c.hist.length>10)c.hist.shift();
+  state.cards[id]=c; save();
+}
+
+/* ---------- stats ---------- */
+function topicStats(tid){
+  const cards=CARDS.filter(c=>c.topic===tid);
+  let mast=0,right=0,wrong=0,recent=[];
+  cards.forEach(c=>{const s=getC(c.id);mast+=Math.min(s.box,5)/5;right+=s.right;wrong+=s.wrong;recent=recent.concat(s.hist||[]);});
+  return {mastery:mast/cards.length,acc:right+wrong?right/(right+wrong):null,rAcc:recent.length?recent.reduce((a,b)=>a+b,0)/recent.length:null,attempts:right+wrong};
+}
+const dueCount=()=>{const now=Date.now();return CARDS.filter(c=>{const s=getC(c.id);return s.box>0&&s.due<=now;}).length;};
+const newCount=()=>CARDS.filter(c=>getC(c.id).box===0).length;
+const weakCount=()=>CARDS.filter(c=>{const s=getC(c.id);return s.right+s.wrong>0&&s.box<=2;}).length;
+const dayKey=t=>{const d=new Date(t);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
+function streak(){
+  const days=new Set(state.sessions.map(s=>dayKey(s.t)));let n=0,d=Date.now();
+  if(!days.has(dayKey(d))) d-=DAY;
+  while(days.has(dayKey(d))){n++;d-=DAY;}
+  return n;
+}
+
+/* ---------- picking ---------- */
+function pickCards(mode,topic){
+  const now=Date.now();
+  if(mode==='math'){
+    const gens=CARDS.filter(c=>c.gen), list=[];
+    const weight=c=>6-Math.min(getC(c.id).box,5);           // weaker card types come up more
+    for(let i=0;i<10;i++){ const tot=gens.reduce((a,c)=>a+weight(c),0); let r=Math.random()*tot; for(const c of gens){ r-=weight(c); if(r<=0){list.push(c);break;} } }
+    return list;
+  }
+  let pool=CARDS.filter(c=>!topic||c.topic===topic);
+  if(mode==='weak') return shuffle(pool.filter(c=>{const s=getC(c.id);return s.right+s.wrong>0&&s.box<=2;})).slice(0,10);
+  const due=shuffle(pool.filter(c=>{const s=getC(c.id);return s.box>0&&s.due<=now;})).sort((a,b)=>getC(a.id).box-getC(b.id).box);
+  const fresh=shuffle(pool.filter(c=>getC(c.id).box===0));
+  const later=shuffle(pool.filter(c=>{const s=getC(c.id);return s.box>0&&s.due>now;})).sort((a,b)=>getC(a.id).due-getC(b.id).due);
+  let list=[...due,...fresh,...later].slice(0,10);
+  if(topic&&list.length<8){const gens=pool.filter(c=>c.gen);while(gens.length&&list.length<8) list.push(pick(gens));}
+  return list;
+}
+function makeQ(card){
+  if(card.gen){ const b=card.gen(); return Object.assign({id:card.id,topic:card.topic,kind:'steps'},b); }
+  const options=shuffle(card.opts);
+  return {id:card.id,topic:card.topic,kind:'mc',q:card.q,options,correct:options.indexOf(card.answer),why:card.why};
+}
+
+/* ---------- render ---------- */
+const app=document.getElementById('app'), tabs=document.getElementById('tabs');
+function render(){
+  tabs.style.display=view.screen==='train'?'none':'flex';
+  tabs.querySelectorAll('button').forEach(b=>b.removeAttribute('aria-current'));
+  const cur=tabs.querySelector(`[data-tab="${view.tab}"]`); if(cur) cur.setAttribute('aria-current','page');
+  const s=view.screen;
+  app.innerHTML=s==='home'?homeHTML():s==='learn'?learnHTML():s==='lesson'?lessonHTML(view.topic):s==='progress'?progressHTML():s==='train'?trainHTML():summaryHTML();
+}
+
+function chartSVG(){
+  const w=330,h=178,base=132,top=22,span=base-top,gap=w/TOPICS.length;
+  const stats=TOPICS.map(t=>topicStats(t.id)), avg=stats.reduce((a,s)=>a+s.mastery,0)/stats.length, avgY=base-avg*span;
+  let g='';
+  TOPICS.forEach((t,i)=>{
+    const s=stats[i],cx=gap*i+gap/2,bh=Math.max(4,s.mastery*span);
+    let col='var(--muted)',fill='none';
+    if(s.attempts>0){col=(s.rAcc!==null&&s.rAcc>=0.7)?'var(--up)':'var(--down)';fill=col;}
+    g+=`<g class="candle" data-action="lesson" data-topic="${t.id}" role="button" tabindex="0" aria-label="${t.name}: ${Math.round(s.mastery*100)}% learned">
+      <rect x="${cx-gap/2}" y="0" width="${gap}" height="${h}" fill="transparent"/>
+      <line class="wick" x1="${cx}" y1="${top}" x2="${cx}" y2="${base}" stroke="var(--line)" stroke-width="2"/>
+      <rect x="${cx-11}" y="${base-bh}" width="22" height="${bh}" rx="2" fill="${fill}" stroke="${col}" stroke-width="1.5"/>
+      <text x="${cx}" y="${base+20}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">${t.short}</text>
+      <text x="${cx}" y="${base+36}" text-anchor="middle" font-size="12" fill="var(--muted)">${Math.round(s.mastery*100)}%</text></g>`;
+  });
+  g+=`<line x1="4" y1="${avgY}" x2="${w-4}" y2="${avgY}" stroke="var(--vwap)" stroke-width="1.5" stroke-dasharray="5 4" pointer-events="none"/>
+      <text x="${w-4}" y="${avgY-6}" text-anchor="end" font-size="11" fill="var(--vwap)" pointer-events="none">avg ${Math.round(avg*100)}%</text>`;
+  return `<svg viewBox="0 0 ${w} ${h}" aria-label="How well you know each topic">${g}</svg>`;
+}
+
+function homeHTML(){
+  const due=dueCount(),fresh=newCount(),weak=weakCount(),st=streak(),n=state.sessions.length;
+  let head,sub;
+  if(n===0){head='Start here';sub='Concept cards on ORB and VWAP, plus math you work out step by step. Wrong answers come back sooner.';}
+  else if(due>0){head=`${plural(due,'card')} due`;sub=fresh?`Plus ${fresh} you haven't seen yet.`:'Clear them and you\'re done for today.';}
+  else if(fresh>0){head='Nothing due';sub=`${fresh} new cards left to learn.`;}
+  else{head='All caught up';sub='Come back tomorrow, or drill the math.';}
+  const line=n?`${st?`${st}-day streak. `:''}${plural(n,'session')} done.`:'';
+  return `<h1>${head}</h1><p class="sub">${sub}</p>
+  <section class="chart"><div class="chart-head"><h2>Your chart</h2><span class="muted small">tap a candle to relearn</span></div>${chartSVG()}</section>
+  <button class="btn btn-primary" data-action="train" data-mode="normal">Train 10 cards</button>
+  <button class="btn btn-ghost" data-action="train" data-mode="math">Math reps: R, money, contracts</button>
+  ${weak?`<button class="btn btn-ghost" data-action="train" data-mode="weak">Weak spots (${weak})</button>`:''}
+  ${line?`<p class="foot-note">${line}</p>`:''}
+  ${storeMode==='memory'?`<p class="notice">Progress can't save in this view. Copy your backup code from Progress before closing, or use the home-screen version.</p>`:''}`;
+}
+
+const meter=m=>`<div class="meter"><span style="width:${Math.max(2,m*100)}%;background:${m>=0.6?'var(--up)':m>0?'var(--down)':'var(--line)'}"></span></div>`;
+function learnHTML(){
+  return `<h1>Learn</h1><p class="sub">Short refreshers. Read one, then drill it.</p>
+  <div class="topic-list">${TOPICS.map(t=>{const s=topicStats(t.id);return `<button class="topic" data-action="lesson" data-topic="${t.id}">
+    <div class="topic-top"><span class="topic-name">${t.name}</span><span class="muted small num">${Math.round(s.mastery*100)}%</span></div>
+    <div class="topic-desc">${t.desc}</div>${meter(s.mastery)}</button>`;}).join('')}</div>`;
+}
+function lessonHTML(tid){
+  const t=topicById(tid),L=LESSONS[tid];
+  const pic=L.svg?L.svg:L.ladder?ladderSVG(L.ladder):'';
+  return `<button class="back" data-action="back">‹ Back</button><h1>${t.name}</h1>
+  ${pic?`<div class="diag">${pic}</div>`:''}
+  <ul class="points">${L.pts.map(p=>`<li${p[1]?` class="${p[1]}"`:''}>${p[0]}</li>`).join('')}</ul>
+  <button class="btn btn-primary" data-action="train" data-mode="topic" data-topic="${tid}">Drill this topic</button>`;
+}
+function progressHTML(){
+  const sess=state.sessions.slice(-20),learned=CARDS.filter(c=>getC(c.id).box>=3).length;
+  return `<h1>Progress</h1><p class="sub">${learned} of ${CARDS.length} cards solid. A card counts as solid after 3 right in a row.</p>
+  <div class="rows">${TOPICS.map(t=>{const s=topicStats(t.id);return `<div class="row"><span><b>${t.name}</b><br><span class="muted small">${s.attempts?`${Math.round(s.acc*100)}% right over ${s.attempts} answers`:'Not started'}</span></span>
+    <span class="num" style="font-size:22px">${Math.round(s.mastery*100)}%</span>${meter(s.mastery)}</div>`;}).join('')}</div>
+  <h2 class="section-title">Recent sessions</h2>
+  ${sess.length?`<div class="spark" role="img" aria-label="Scores of your last ${sess.length} sessions">${sess.map(s=>{const p=s.score/s.total;return `<span title="${s.score}/${s.total}" style="height:${Math.max(6,p*100)}%;background:${p>=0.7?'var(--up)':'var(--down)'}"></span>`;}).join('')}</div>
+  <p class="muted small" style="margin-top:8px">Green = 70% or better. Guesses don't count as right.</p>`:`<p class="empty">No sessions yet. Your scores show up here.</p>`}
+  <section class="backup"><h2 class="section-title">Backup</h2>
+    <p class="muted small" style="margin-top:4px">${storeMode==='memory'?'This view can\'t save. Copy this code and paste it back next time.':'Progress saves automatically. Use this code to move it to another device.'}</p>
+    <textarea readonly aria-label="Your backup code" onclick="this.select()">${backupCode()}</textarea>
+    <textarea id="restoreBox" placeholder="Paste a backup code here" aria-label="Paste a backup code"></textarea>
+    <button class="btn btn-ghost" data-action="restore">Restore from code</button>
+    ${view.restoreMsg?`<p class="status" style="color:${view.restoreOk?'var(--up)':'var(--down)'}">${view.restoreMsg}</p>`:''}
+  </section>
+  <button class="btn btn-ghost danger" style="margin-top:32px" data-action="reset">${view.confirmReset?'Tap again to erase everything':'Reset progress'}</button>`;
+}
+
+function fmtVal(s,v){ if(s.type==='choice') return s.choices[v]; return s.unit==='$'?money(v):s.unit==='pts'?`${v} pts`:s.unit==='R'?`${v}`:`${v}`; }
+function stepsHTML(q,T){
+  let h=`<div class="steps">`;
+  q.steps.forEach((s,i)=>{
+    if(i<T.step){
+      const r=T.stepRes[i];
+      h+=`<div class="step ${r.ok?'ok':'bad'}${i===T.step-1?' fresh':''}"><div class="step-n">Step ${i+1}</div><p class="step-ask">${s.ask}</p>
+        <p class="step-you">${r.ok?`✓ ${r.label}`:`✗ You said ${r.label}. It's ${fmtVal(s,s.answer)}.`}</p><p class="step-show">${s.show}</p></div>`;
+    } else if(i===T.step){
+      h+=`<div class="step"><div class="step-n">Step ${i+1} of ${q.steps.length}</div><p class="step-ask">${s.ask}</p>`;
+      if(s.type==='choice') h+=`<div class="choice-row">${s.choices.map((c,ci)=>`<button class="opt" data-action="stepchoice" data-i="${ci}">${c}</button>`).join('')}</div>`;
+      else h+=`<div class="answer-row"><label class="field">${s.unit==='$'?'<span>$</span>':''}<input id="stepInput" inputmode="decimal" autocomplete="off" enterkeyhint="done" aria-label="Your answer"></label>
+        <button class="btn btn-primary check" data-action="check">Check</button></div>${T.err?`<p class="err">${T.err}</p>`:''}`;
+      h+=`</div>`;
+    }
+  });
+  h+=`</div>`;
+  if(T.step>=q.steps.length){
+    h+=`<div class="final ${q.good?'':'bad'}" id="finalBox" style="margin-top:14px"><p class="muted small">Answer</p><p class="big num" style="color:${q.good?'var(--up)':'var(--down)'}">${q.final}</p>
+      <p style="margin-top:6px">${q.finalNote}</p>${q.ladder?`<div class="diag" style="margin-bottom:0">${ladderSVG(q.ladder)}</div>`:''}
+      <p style="margin-top:12px;font-weight:600">${T.stepRes.every(r=>r.ok)?'Every step right. That\'s the process, not a guess.':'Look at the red step above. That\'s the one to fix.'}</p></div>
+      <button class="btn btn-primary" style="margin-top:16px" data-action="next">${T.i+1<T.qs.length?'Next':'See results'}</button>`;
+  }
+  return h;
+}
+function mcHTML(q,T){
+  const answered=T.picked!==null;
+  let h=`<div class="opts">${q.options.map((o,i)=>{let cls='opt';if(answered){if(i===q.correct)cls+=' right';else if(i===T.picked)cls+=' wrong';else cls+=' dim';}
+    return `<button class="${cls}" data-action="answer" data-i="${i}" ${answered?'disabled':''}>${o}</button>`;}).join('')}</div>`;
+  if(answered){
+    const ok=T.picked===q.correct;
+    if(ok&&T.conf===null){
+      h+=`<div class="feedback"><h3>Right</h3><p>${q.why}</p><p class="conf-q">Honest answer: did you know it, or guess?</p>
+        <div class="btn-row"><button class="btn btn-primary" data-action="conf" data-c="sure">Knew it</button><button class="btn btn-ghost" data-action="conf" data-c="guess">Guessed</button></div></div>`;
+    } else {
+      const cls=!ok?'bad':T.conf==='guess'?'meh':'';
+      const title=!ok?'Not quite':T.conf==='guess'?'Right, but guessed':'Right';
+      const extra=!ok?'':T.conf==='guess'?'<p style="margin-top:8px">It\'ll come back soon so you can learn it for real.</p>':'';
+      h+=`<div class="feedback ${cls}"><h3>${title}</h3><p>${q.why}</p>${extra}</div>
+        <button class="btn btn-primary" style="margin-top:16px" data-action="next">${T.i+1<T.qs.length?'Next':'See results'}</button>`;
+    }
+  }
+  return h;
+}
+function trainHTML(){
+  const T=view.train,q=T.qs[T.i];
+  const done=q.kind==='steps'?T.step>=q.steps.length:(T.picked!==null&&(T.picked!==q.correct||T.conf!==null));
+  const pct=((T.i+(done?1:0))/T.qs.length)*100;
+  return `<div class="train-top"><button class="close" data-action="quit" aria-label="Stop training">×</button>
+    <div class="bar"><span style="width:${pct}%"></span></div><span class="count num">${T.i+1}/${T.qs.length}</span></div>
+    <span class="tag">${topicById(q.topic).name}${q.kind==='steps'?', step by step':''}</span>
+    <p class="q">${q.q}</p>${q.kind==='steps'?stepsHTML(q,T):mcHTML(q,T)}`;
+}
+function summaryHTML(){
+  const R=view.train.results,total=R.length,right=R.filter(r=>r.res==='right').length,guess=R.filter(r=>r.res==='guess').length,wrong=total-right-guess;
+  const missed={};R.filter(r=>r.res!=='right').forEach(r=>missed[r.topic]=(missed[r.topic]||0)+1);
+  const worst=Object.keys(missed).sort((a,b)=>missed[b]-missed[a])[0], p=total?right/total:0;
+  const msg=p===1?'Clean sweep, no guesses.':p>=0.7?'Solid. The misses come back sooner so they stick.':p>=0.4?'Getting there. Reread the topic you missed most, then go again.':'Rough one — that\'s what this is for. Read the lesson, then drill it.';
+  const parts=[`${right} right`];if(guess)parts.push(`${guess} guessed`);if(wrong)parts.push(`${wrong} wrong`);
+  return `<p class="score num" style="color:${p>=0.7?'var(--up)':'var(--down)'}">${right}/${total}</p>
+  <p class="muted">${parts.join(', ')}</p><p style="font-size:18px;margin-top:8px">${msg}</p>
+  ${worst?`<div class="missed"><p class="muted">To work on:</p><ul>${Object.keys(missed).map(k=>`<li>${topicById(k).name} (${missed[k]})</li>`).join('')}</ul></div>
+  <button class="btn btn-primary" data-action="lesson" data-topic="${worst}">Relearn ${topicById(worst).name}</button>
+  <button class="btn btn-ghost" data-action="home">Done</button>`:`<button class="btn btn-primary" style="margin-top:24px" data-action="home">Done</button>`}`;
+}
+
+/* ---------- actions ---------- */
+function startTrain(mode,topic){
+  const cards=pickCards(mode,topic); if(!cards.length) return;
+  view.train={qs:cards.map(makeQ),i:0,picked:null,conf:null,step:0,stepRes:[],err:'',results:[]};
+  view.screen='train'; render(); window.scrollTo(0,0); focusInput();
+}
+function finishTrain(){
+  const R=view.train.results;
+  if(R.length>=3){state.sessions.push({t:Date.now(),score:R.filter(r=>r.res==='right').length,total:R.length});if(state.sessions.length>200)state.sessions=state.sessions.slice(-200);save();}
+}
+function focusInput(){ const el=document.getElementById('stepInput'); if(el){ el.focus({preventScroll:true}); el.closest('.step').scrollIntoView({block:'center',behavior:'smooth'}); } }
+function afterStep(){
+  const T=view.train,q=T.qs[T.i];
+  T.step++; T.err='';
+  if(T.step>=q.steps.length){ const ok=T.stepRes.every(r=>r.ok); grade(q.id,ok); T.results.push({topic:q.topic,res:ok?'right':'wrong'}); }
+  render();
+  if(T.step>=q.steps.length){ const f=document.getElementById('finalBox'); if(f) f.scrollIntoView({block:'start',behavior:'smooth'}); }
+  else focusInput();
+}
+function checkStep(){
+  const T=view.train,q=T.qs[T.i],s=q.steps[T.step],el=document.getElementById('stepInput');
+  const raw=(el?el.value:'').replace(/[$,\s+R]/gi,'').replace('−','-');
+  const v=parseFloat(raw);
+  if(raw===''||isNaN(v)){T.err='Type a number first.';render();focusInput();return;}
+  const ok=Math.abs((s.abs?Math.abs(v):v)-s.answer)<0.001;
+  T.stepRes.push({ok,label:fmtVal(s,s.abs?Math.abs(v):v)});
+  afterStep();
+}
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-action]'); if(!el) return;
+  const a=el.dataset.action;
+  if(a!=='reset') view.confirmReset=false;
+  if(a!=='restore') view.restoreMsg='';
+  const go=(screen,tab)=>{view.screen=screen;view.tab=tab;render();window.scrollTo(0,0);};
+  if(a==='tab') go(el.dataset.tab,el.dataset.tab);
+  else if(a==='lesson'){view.topic=el.dataset.topic;go('lesson','learn');}
+  else if(a==='back') go('learn','learn');
+  else if(a==='home') go('home','home');
+  else if(a==='train') startTrain(el.dataset.mode,el.dataset.topic);
+  else if(a==='check') checkStep();
+  else if(a==='stepchoice'){const T=view.train,s=T.qs[T.i].steps[T.step],i=+el.dataset.i;T.stepRes.push({ok:i===s.answer,label:s.choices[i]});afterStep();}
+  else if(a==='answer'){
+    const T=view.train;if(T.picked!==null)return;
+    T.picked=+el.dataset.i;const q=T.qs[T.i];
+    if(T.picked!==q.correct){grade(q.id,false);T.results.push({topic:q.topic,res:'wrong'});}
+    render();
+  }
+  else if(a==='conf'){
+    const T=view.train,q=T.qs[T.i];T.conf=el.dataset.c;
+    grade(q.id,T.conf==='sure');T.results.push({topic:q.topic,res:T.conf==='sure'?'right':'guess'});render();
+  }
+  else if(a==='next'){
+    const T=view.train;
+    if(T.i+1<T.qs.length){T.i++;T.picked=null;T.conf=null;T.step=0;T.stepRes=[];T.err='';render();window.scrollTo(0,0);focusInput();}
+    else{finishTrain();go('summary','home');}
+  }
+  else if(a==='quit'){finishTrain();go('home','home');}
+  else if(a==='restore'){
+    const v=(document.getElementById('restoreBox').value||'').trim();
+    try{applyLoaded(atob(v));save();view.restoreMsg='Restored.';view.restoreOk=true;}catch(err){view.restoreMsg='That code didn\'t work. Copy the whole thing and try again.';view.restoreOk=false;}
+    render();
+  }
+  else if(a==='reset'){
+    if(!view.confirmReset){view.confirmReset=true;render();return;}
+    state={cards:{},sessions:[]};view.confirmReset=false;save();render();
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.id==='stepInput'){e.preventDefault();checkStep();return;}
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('candle')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));}
+});
+load();
+</script>
+</body>
+</html>
